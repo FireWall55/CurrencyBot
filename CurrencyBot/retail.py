@@ -7,12 +7,16 @@ import items
 prefix: str = "="
 os.chdir('C:\\Users\\nakul\\OneDrive\\Desktop\\Code\\DiscordBots\\CurrencyBot')
 
-shops = [{"name": "gun", "price": 100},
-        {"name": "weapon", "price": 500},
-        {"name": "pencil", "price": 10}]
+shops =[{"name": "pencil", "price": 10},
+        {"name": "book", "price": 50},
+        {"name": "dumbell", "price": 100},
+        {"name": "croissant", "price": 250},
+        {"name": "baguette", "price": 300}]
+
+
 commands: str = [{"name": f"{prefix}shop", "description": "opens a shop displaying all items with prices for sale"},
-                 {"name": f"{prefix}buy (item)", "description": "buy a specific item"},
-                 {"name": f"{prefix}buy multi (item) (count)", "description": "buy a specific number of an item"}]
+                 {"name": f"{prefix}buy (item) (count)", "description": "buy a specific item of a specific count"},
+                 {"name": f"{prefix}sell (item) (count)", "description": "sell a specific number of an item"}]
 
 
 
@@ -21,7 +25,6 @@ async def print_commands(message: discord.Message):
                color=discord.Color.purple())
     for command in commands:
         em.add_field(name=command["name"], value=command["description"], inline=False)
-        
     await message.channel.send(embed=em)
 
 
@@ -38,8 +41,6 @@ async def shop(message: discord.Message):
 
 async def buy(message: discord.Message, item: str, count: int):
     a = await economy.open_account(message, True)
-    if(a):
-        await message.channel.send(f'<{message.author.mention}> an account has been made for you :D Looking forward to our business')
     users = await get_bank_data()
     
     #checking
@@ -56,9 +57,37 @@ async def buy(message: discord.Message, item: str, count: int):
     #if the item is valid
     enoughMoney: bool = await economy.spend_money(message=message, amt=price*count)
     if(enoughMoney):
-        await items.add_items(message=message, item=item, count=count)
+        await items.add_items_bank(message=message, item=item, count=count, print=True)
     
+async def sell(message: discord.Message, item: str, count: int):
+    a = await economy.open_account(message, True)
+    users = await get_bank_data()
+    author = message.author
     
+    found: bool = False
+    for thing in users[str(author.id)]["items"]:
+        if thing["name"] == item:
+            found = True
+            sell_item = thing
+    if not found:
+        await message.channel.send("You do not own that item")
+        return
+    if not sell_item["count"] >= count or sell_item["count"] == 0:
+        await message.channel.send("You don't have enough to sell")
+        return
+    #add money to wallet
+    #remove items from inventory
+    original = users[str(author.id)]["wallet"]
+    item_price: int = 0
+    for index in items.item_prices:
+        if index["name"] == item:
+            item_price = index["price"]
+    
+    users[str(author.id)]["wallet"] += int(count * item_price * 0.8) #you get 80% back
+    await message.channel.send(f"You sold {item} of count {count} for 80% of what it would be bought for. \nTransaction: ${original} -> ${users[str(author.id)]["wallet"]}")
+    #sell_item["count"] -= count
+    await items.add_items_bank(message=message, item=item, count= -1 * count,print=False)
+
      
     
     

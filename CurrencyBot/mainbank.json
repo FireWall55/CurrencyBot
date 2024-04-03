@@ -1,0 +1,200 @@
+{
+  "703024548093755483": {
+    "username": "fire_wall_55",
+    "wallet": 1250,
+    "bank": 2408,
+    "job": "supplier",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "gold_banana",
+        "count": 1
+      },
+      {
+        "name": "pistol",
+        "count": 6
+      },
+      {
+        "name": "dumbell",
+        "count": 3
+      }
+    ]
+  },
+  "849754645403271238": {
+    "username": "universedragon",
+    "wallet": 1206,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pistol",
+        "count": 2
+      }
+    ]
+  },
+  "672870716437299201": {
+    "username": "_forcer",
+    "wallet": 550,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      },
+      {
+        "name": "dumbell",
+        "count": 1
+      },
+      {
+        "name": "baguette",
+        "count": 1
+      }
+    ]
+  },
+  "1149195316885733468": {
+    "username": "vennnines",
+    "wallet": 940,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      }
+    ]
+  },
+  "704674995284082728": {
+    "username": "thecoolguy17",
+    "wallet": 700,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      },
+      {
+        "name": "baguette",
+        "count": 1
+      }
+    ]
+  },
+  "820458615831265280": {
+    "username": "taco_stand",
+    "wallet": 1050,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 2
+      }
+    ]
+  },
+  "1193266870715961444": {
+    "username": "arsenic.33.75",
+    "wallet": 1000,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      }
+    ]
+  },
+  "850903170154758164": {
+    "username": "planted4",
+    "wallet": 950,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      },
+      {
+        "name": "baguette",
+        "count": 1
+      }
+    ]
+  },
+  "710658689467678800": {
+    "username": "apachegods",
+    "wallet": 900,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      },
+      {
+        "name": "pistol",
+        "count": 1
+      }
+    ]
+  },
+  "872447298284699649": {
+    "username": "banana_4_dayz",
+    "wallet": 1000,
+    "bank": 0,
+    "job": "none",
+    "organization": "none",
+    "speed": 1,
+    "health": 100,
+    "inteligence": 100,
+    "strength": 50,
+    "items": [
+      {
+        "name": "pencil",
+        "count": 1
+      }
+    ]
+  }
+}
