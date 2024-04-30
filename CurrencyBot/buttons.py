@@ -106,11 +106,17 @@ class CombatTurns(discord.ui.View):
         #currently only for player1, implement system for player 2 as well with an if statment with %turns == 0
         turn: int = combat_info["battle"]["turn"]
         if turn%2 == 1:
+            
             if str(interaction.user.id) != combat_info["battle"]["user1"]:
                 await interaction.response.send_message("It's not your turn you dumbo wumbo", ephemeral=True)
                 return
+            
             async def my_callback(interaction: discord.Interaction):
-                await interaction.channel.send(f"{combat_info['battle']["username1"]} selected {select.values[0]} as their weapon")
+                await interaction.response.send_message("Attack Registered", ephemeral=True)
+                em = discord.Embed(title=f"{combat_info['battle']["username1"]} selected {select.values[0]} as their weapon",
+                                   description="",
+                                   color=discord.Color.blue())
+                await interaction.channel.send(embed=em)
                 await combat.p1_attack(message=self.message, weapon=select.values[0])
                 combat_info_inner = await combat.get_combat_info()
                 combat_info_inner["battle"]["timed_out"] = False
@@ -123,13 +129,19 @@ class CombatTurns(discord.ui.View):
             view = discord.ui.View()
             view.add_item(select)
             await interaction.channel.send("Player 1 is choosing their attack...")
-            await interaction.response.send_message("Please select a way of attack: ", view=view, ephemeral=True)
+            await interaction.response.send_message("Player 1 Please select a way of attack: ", view=view, ephemeral=True)
         else:
+            
             if str(interaction.user.id) != combat_info["battle"]["user2"]:
                 await interaction.response.send_message("It's not your turn you dumbo wumbo", ephemeral=True)
                 return
+            
             async def my_callback(interaction: discord.Interaction):
-                await interaction.channel.send(f"{combat_info['battle']["username2"]} selected {select.values[0]} as their weapon")
+                await interaction.response.send_message("Attack Registered", ephemeral=True)
+                em = discord.Embed(title=f"{combat_info['battle']["username2"]} selected {select.values[0]} as their weapon",
+                                   description="",
+                                   color=discord.Color.blue())
+                await interaction.channel.send(embed=em)
                 await combat.p2_attack(message=self.message, weapon=select.values[0])
                 combat_info_inner = await combat.get_combat_info()
                 combat_info_inner["battle"]["timed_out"] = False

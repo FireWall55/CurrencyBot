@@ -164,14 +164,20 @@ async def send_message(message: Message, user_message: str) -> None:
                 return
         await economy.withdraw(message=message, amt=int(parts[1]))
         return
-    if user_message.startswith("deposit"):
+    if user_message.startswith("deposit"): #deposit (amt)
         parts = user_message.split()
+        if len(parts) != 2:
+            await message.channel.send("Please input the correct number of fields")
+            return
         if parts[1] == "all":
             if users[str(message.author.id)]["wallet"] == 0:
                 await message.channel.send("You have nothing in your wallet. YOU BROKE XD")
                 return
-            else:
+            elif parts[1].isdigit() :
                 await economy.deposit(message=message, amt=users[str(message.author.id)]["wallet"])
+                return
+            else:
+                await message.channel.send("Please input a number for the 2nd value")
                 return
         await economy.deposit(message=message, amt=int(parts[1]))
         return

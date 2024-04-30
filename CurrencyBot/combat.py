@@ -50,10 +50,16 @@ async def start(message: discord.Message, bet: int):
     
     #checks if both players have enough for the bet
     if users[combat_info["battle"]["user1"]]["wallet"] < bet:
-        await message.channel.send(f"{view.username1} does not have enough money in their walletfor the bet :(")
+        await message.channel.send(f"{view.username1} does not have enough money in their wallet for the bet :(")
+        del combat_info["battle"]
+        with open("combat.json", "w") as f:
+            json.dump(combat_info, f, indent=2)
         return
     if users[combat_info["battle"]["user2"]]["wallet"] < bet:
         await message.channel.send(f"{view.username2} does not have enough money  in their wallet for the bet :(")
+        del combat_info["battle"]
+        with open("combat.json", "w") as f:
+            json.dump(combat_info, f, indent=2)
         return
     
     
@@ -75,7 +81,12 @@ async def turns(message: discord.Message, bet: int):
         view = buttons.CombatTurns(timeout=60)
         turn = combat_info["battle"]["turn"]
         if turn%2 == 1:
-            button_msg = await message.channel.send(f"It is {combat_info["battle"]["username1"]}'s turn. Please choose an option", view=view)
+            p1Health: str = combat_info["battle"]["username1"] + " Health: " + "\t\t" + ("🟩" * int((combat_info["battle"]["user1health"]/10)))
+            p1Health += "⬜" * int((10 - ((combat_info["battle"]["user1health"])/10)))
+            p2Health: str = combat_info["battle"]["username2"] + " Health: " + "\t\t" + ("🟩" * int((combat_info["battle"]["user2health"]/10)))
+            p2Health += "⬜" * int((10 - ((combat_info["battle"]["user2health"])/10)))
+            em = discord.Embed(title="Player healths:", description=f"{p1Health} \n {p2Health}", color=discord.Color.brand_red())
+            button_msg = await message.channel.send(f"It is {combat_info["battle"]["username1"]}'s turn. Please choose an option", embed=em,view=view)
             view.message = button_msg
             await view.wait()
             combat_info = await get_combat_info()
@@ -84,13 +95,17 @@ async def turns(message: discord.Message, bet: int):
             await view.disable_all_items()
             combat_info["battle"]["timed_out"] = True
         else:
-            button_msg = await message.channel.send(f"It is {combat_info["battle"]["username2"]}'s turn. Please choose an option", view=view)
+            p1Health: str = combat_info["battle"]["username1"] + " Health: " + "\t\t" +  ("🟩" * int((combat_info["battle"]["user1health"]/10)))
+            p1Health += "⬜" * int((10 - ((combat_info["battle"]["user1health"])/10)))
+            p2Health: str = combat_info["battle"]["username2"] + " Health: "+ "\t\t" + ("🟩" * int((combat_info["battle"]["user2health"]/10)))
+            p2Health += "⬜" * int((10 - ((combat_info["battle"]["user2health"])/10)))
+            em = discord.Embed(title="Player healths:", description=f"{p1Health} \n {p2Health}", color=discord.Color.brand_red())
+            button_msg = await message.channel.send(f"It is {combat_info["battle"]["username2"]}'s turn. Please choose an option", embed=em,view=view)
             view.message = button_msg
             await view.wait()
             combat_info = await get_combat_info()
             if combat_info["battle"]["timed_out"]:
                 break
-            print(f"p2: {combat_info["battle"]["timed_out"]}")
             await view.disable_all_items()
             combat_info["battle"]["timed_out"] = True
         
@@ -98,7 +113,6 @@ async def turns(message: discord.Message, bet: int):
         with open("combat.json", "w") as f:
             json.dump(combat_info, f, indent=2)
     
-    print("while loop exited")
     users = await economy.get_bank_data()
     if combat_info["battle"]["user1health"] <= 0:
         await message.channel.send(f"{combat_info["battle"]["username2"]} won the battle and won ${bet}")
@@ -121,7 +135,6 @@ async def turns(message: discord.Message, bet: int):
             json.dump(users, f, indent=2)
         return
     else:
-        print("timed out")
         del combat_info["battle"]
         with open("combat.json", "w") as f:
             json.dump(combat_info, f, indent=2)
@@ -175,8 +188,10 @@ async def p1_attack(message: discord.Message, weapon: str):
     combat["battle"]["user2health"] -= dmg
     with open("combat.json", "w") as f:
         json.dump(combat, f, indent=2)
-        
-    await message.channel.send(f"{combat["battle"]["username1"]} did {dmg} dmg to {combat["battle"]["username2"]} with a {weapon}")
+    
+    em = discord.Embed(title=f"{combat["battle"]["username1"]} did {dmg} dmg to {combat["battle"]["username2"]} with a {weapon}",
+                       description="", color=discord.Color.magenta())
+    await message.channel.send(embed=em)
     
     
     
@@ -225,8 +240,10 @@ async def p2_attack(message: discord.Message, weapon: str):
     combat["battle"]["user1health"] -= dmg
     with open("combat.json", "w") as f:
         json.dump(combat, f, indent=2)
-        
-    await message.channel.send(f"{combat["battle"]["username2"]} did {dmg} dmg to {combat["battle"]["username1"]} with a {weapon}")
+    
+    em = discord.Embed(title=f"{combat["battle"]["username2"]} did {dmg} dmg to {combat["battle"]["username1"]} with a {weapon}",
+                       description="", color=discord.Color.magenta())
+    await message.channel.send(embed=em)
     
     
 async def get_combat_info():

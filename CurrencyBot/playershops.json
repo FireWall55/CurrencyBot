@@ -1,0 +1,20 @@
+{
+  "703024548093755483": {
+    "username": "fire_wall_55",
+    "visible": true,
+    "banned_users": [
+      {
+        "name": ""
+      }
+    ],
+    "banned_orgs": [
+      {
+        "name": "coke"
+      },
+      {
+        "name": "kool_kids_club"
+      }
+    ],
+    "products": []
+  }
+}
